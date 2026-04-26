@@ -38,7 +38,7 @@ public class Pipe {
     }
 
     /**
-     * Check if pipe is off screen
+     * Check if pipe is off-screen
      */
     public boolean isOffScreen() {
         return x + width < 0;
@@ -62,7 +62,7 @@ public class Pipe {
     }
 
     /**
-     * Simple collision check with bird
+     *  collision check with bird
      */
     public boolean collidesWith(float birdX, float birdY, float birdSize) {
         return birdX < x + width &&
