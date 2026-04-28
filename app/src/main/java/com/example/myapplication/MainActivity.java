@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(() -> scoreText.setText(String.valueOf(engine.getScore())));
         });
 
-        gameView.setGameEngine(engine); // Rahma's method name
+        gameView.setGameEngine(engine);
         engine.reset();
     }
 

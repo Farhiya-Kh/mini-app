@@ -2,6 +2,10 @@ package com.example.myapplication;
 
 public class GameEngine {
 
+    public boolean getScore() {
+        return false;
+    }
+
     public enum GameState {
         START,
         RUNNING,
@@ -67,7 +71,7 @@ public class GameEngine {
         currentState = GameState.GAME_OVER;
     }
 
-    public float     getBirdY() {
+    public float getBirdY() {
         return birdY; }
     public float     getVelocity() {
         return velocity; }
