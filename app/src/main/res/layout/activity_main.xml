@@ -7,6 +7,7 @@
         android:id="@+id/gameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
@@ -18,5 +19,5 @@
         android:textColor="@android:color/white"
         android:background="#66000000"
         android:padding="8dp" />
-</FrameLayout>
 
+</FrameLayout>

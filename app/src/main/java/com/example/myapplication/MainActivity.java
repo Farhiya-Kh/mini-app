@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
 
     private GameEngine engine;
-    public GameView gameView;
+    private GameView gameView;
     private TextView scoreText;
 
     private final Handler handler = new Handler();

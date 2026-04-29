@@ -77,4 +77,9 @@ public class GameEngine {
         return velocity; }
     public GameState getCurrentState() {
         return currentState; }
+    public int getScore() {
+        return 0;
+    }
 }
+
+
