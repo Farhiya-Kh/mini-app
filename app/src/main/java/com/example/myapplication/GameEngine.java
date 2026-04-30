@@ -2,15 +2,10 @@ package com.example.myapplication;
 
 /**
  * Controls the main game state and score.
- *
- * <p>The GameEngine tracks whether the game is starting, running, or over.
- * It also stores the current score and handles simple state changes.</p>
+ * Also coordinates the Bird physics.
  */
 public class GameEngine {
 
-    /**
-     * Represents the current state of the game.
-     */
     public enum GameState {
         START,
         RUNNING,
@@ -21,36 +16,28 @@ public class GameEngine {
     private int score;
     private Runnable onUpdate;
 
-    /**
-     * Creates a game engine.
-     *
-     * @param onUpdate code that should run when the game updates
-     */
+    // Add Bird
+    private Bird bird;
+
     public GameEngine(Runnable onUpdate) {
         this.onUpdate = onUpdate;
         reset();
     }
 
-    /**
-     * Resets the game state and score.
-     */
     public void reset() {
         currentState = GameState.START;
         score = 0;
+
+        // Initialize bird at starting position
+        bird = new Bird(500f);
     }
 
-    /**
-     * Starts the game if it is on the start screen.
-     */
     public void startGame() {
         if (currentState == GameState.START) {
             currentState = GameState.RUNNING;
         }
     }
 
-    /**
-     * Handles a tap based on the current game state.
-     */
     public void onTap() {
         switch (currentState) {
             case START:
@@ -60,54 +47,52 @@ public class GameEngine {
                 reset();
                 break;
             case RUNNING:
-                break;
-            default:
+                flap(); // IMPORTANT: allow tap to flap
                 break;
         }
     }
 
-    /**
-     * Updates the game.
-     */
     public void update() {
         if (currentState != GameState.RUNNING) {
             return;
         }
+
+        // Update bird physics
+        bird.update();
 
         if (onUpdate != null) {
             onUpdate.run();
         }
     }
 
-    /**
-     * Changes the game state to game over.
-     */
+    public void flap() {
+        if (currentState == GameState.RUNNING) {
+            bird.flap();
+        }
+    }
+
     public void triggerGameOver() {
         currentState = GameState.GAME_OVER;
     }
 
-    /**
-     * Adds one point to the score.
-     */
     public void addPoint() {
         score++;
     }
 
-    /**
-     * Gets the current state.
-     *
-     * @return current game state
-     */
     public GameState getCurrentState() {
         return currentState;
     }
 
-    /**
-     * Gets the current score.
-     *
-     * @return current score
-     */
     public int getScore() {
         return score;
+    }
+
+    // Expose bird data for tests
+    public float getBirdY() {
+        return bird.getYPosition();
+    }
+
+    public float getVelocity() {
+        return bird.getVelocity();
     }
 }
