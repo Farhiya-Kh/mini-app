@@ -4,7 +4,9 @@
 Replicate of Flappy Bird game.
 
 ## How to Run
-./gradlew appRun
+press play button 
+## How to test 
+./gradlew test  
 
 ## Team Overview
 This project was developed as a team effort, with each member responsible for a core part of the game. The work is divided into focused components that integrate into a complete gameplay system.
