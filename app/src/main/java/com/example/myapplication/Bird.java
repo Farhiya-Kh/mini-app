@@ -1,68 +1,127 @@
 package com.example.myapplication;
 
 /**
- * The Bird class handles all physics for the bird in the game.
- * Responsibilities:
- * - Apply gravity (bird falls down)
- * - Handle flap (user tap → bird goes up)
- * - Update position every frame
- * This class ONLY handles logic, not UI.
+ * Handles the bird's movement and appearance state.
+ *
+ * <p>The Bird class is responsible for gravity, flap movement, position updates,
+ * and appearance changes. The appearance uses the decorator pattern so the bird
+ * can change color or become transparent without changing the movement logic.</p>
  */
 public class Bird {
 
-    // Current vertical position of the bird
     private float yPosition;
-
-    // Current vertical velocity (speed)
     private float velocity;
 
-    // Constant gravity force applied each frame
-    private final float GRAVITY_FORCE = 0.5f;
+    private static final float GRAVITY_FORCE = 0.5f;
+    private static final float FLAP_STRENGTH = -10f;
 
-    // Upward force when user taps
-    private final float FLAP_STRENGTH = -10f;
+    private BirdAppearance appearance;
 
     /**
-     * Constructor sets starting position of the bird
+     * Creates a bird at the given starting y-position.
+     *
+     * @param startY starting vertical position
      */
     public Bird(float startY) {
         this.yPosition = startY;
         this.velocity = 0;
+        this.appearance = new BasicBirdAppearance();
     }
 
     /**
-     * Updates bird position every frame
+     * Updates the bird's position for one frame.
      */
     public void update() {
-        applyGravity();            // gravity affects velocity
-        yPosition += velocity;     // position changes based on velocity
+        applyGravity();
+        yPosition += velocity;
     }
 
     /**
-     * Applies gravity (pulls bird downward)
+     * Applies gravity to the bird.
      */
     public void applyGravity() {
         velocity += GRAVITY_FORCE;
     }
 
     /**
-     * Called when user taps → bird moves upward
+     * Makes the bird move upward.
      */
     public void flap() {
         velocity = FLAP_STRENGTH;
     }
 
     /**
-     * Returns current vertical position
+     * Changes the bird to a random color.
+     */
+    public void changeToRandomColor() {
+        appearance = new RandomColorBirdDecorator(new BasicBirdAppearance());
+    }
+
+    /**
+     * Makes the bird transparent.
+     */
+    public void makeTransparent() {
+        appearance = new TransparentBirdDecorator(appearance);
+    }
+
+    /**
+     * Resets the bird appearance back to the normal default appearance.
+     */
+    public void resetAppearance() {
+        appearance = new BasicBirdAppearance();
+    }
+
+    /**
+     * Gets the bird's current y-position.
+     *
+     * @return current y-position
      */
     public float getYPosition() {
         return yPosition;
     }
 
     /**
-     * Returns current velocity
+     * Sets the bird's current y-position.
+     *
+     * @param yPosition new y-position
+     */
+    public void setYPosition(float yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    /**
+     * Gets the bird's current velocity.
+     *
+     * @return current velocity
      */
     public float getVelocity() {
         return velocity;
+    }
+
+    /**
+     * Sets the bird's current velocity.
+     *
+     * @param velocity new velocity
+     */
+    public void setVelocity(float velocity) {
+        this.velocity = velocity;
+    }
+
+    /**
+     * Gets the bird's current color.
+     *
+     * @return current color
+     */
+    public int getColor() {
+        return appearance.getColor();
+    }
+
+    /**
+     * Gets the bird's current transparency.
+     *
+     * @return alpha value
+     */
+    public int getAlpha() {
+        return appearance.getAlpha();
     }
 }
